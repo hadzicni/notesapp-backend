@@ -36,6 +36,8 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
+      - name: Compile app and tests (no execution)
+        run: mvn -B -ntp -DskipTests clean test-compile
       - name: Run PIT Mutation Testing
         run: mvn -B -ntp org.pitest:pitest-maven:mutationCoverage
       - name: Upload PIT report
