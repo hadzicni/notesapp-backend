@@ -7,6 +7,7 @@ import ch.hadzic.nikola.notesapp.data.repository.NoteRepository;
 import ch.hadzic.nikola.notesapp.data.repository.TagRepository;
 import ch.hadzic.nikola.notesapp.data.repository.TodoRepository;
 import ch.hadzic.nikola.notesapp.data.service.NoteService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -171,5 +172,11 @@ class NoteServiceTest {
         assertTrue(ex.getMessage().contains("Tag nicht gefunden"));
         verify(noteRepository, never()).save(any());
     }
-}
 
+    @Test
+    void deleteNote_whenNotFound_throwsEntityNotFound() {
+        when(noteRepository.findById(123L)).thenReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class, () -> noteService.deleteNote(123L));
+        verify(noteRepository, never()).delete(any());
+    }
+}

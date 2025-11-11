@@ -171,9 +171,9 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>1.16.0</version>
                 <configuration>
+                    <testPlugin>junit5</testPlugin>
                     <targetClasses>
-                        <param>ch.hadzic.nikola.notesapp.data.service.*</param>
-                        <param>ch.hadzic.nikola.notesapp.util.*</param>
+                        <param>ch.hadzic.nikola.notesapp.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>ch.hadzic.nikola.notesapp.service.*</param>
@@ -184,8 +184,14 @@
                     <mutators>
                         <mutator>STRONGER</mutator>
                     </mutators>
-                    <junit5PluginVersion>1.2.1</junit5PluginVersion>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
