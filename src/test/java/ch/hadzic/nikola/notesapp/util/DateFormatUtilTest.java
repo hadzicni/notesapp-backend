@@ -32,5 +32,17 @@ class DateFormatUtilTest {
         // null handling
         assertThrows(NullPointerException.class, () -> DateFormatUtil.parse(null));
     }
-}
 
+    // TDD – Offener Bug: Parsing sollte führende/trailing Whitespaces tolerieren
+    // Dieser Test bildet das gewünschte Verhalten ab, schlägt aktuell aber fehl
+    // und bleibt bewusst offen (siehe Fehlerprotokoll). Er ist mit einem Tag
+    // markiert, damit er in CI-Workflows ausgeschlossen werden kann.
+    @org.junit.jupiter.api.Tag("tdd-open-bug")
+    @Test
+    void parse_should_trim_whitespace() {
+        LocalDateTime expected = LocalDateTime.of(2025, 11, 11, 22, 0);
+        // Aktuelles Verhalten: wirft DateTimeParseException, weil nicht getrimmt wird
+        LocalDateTime parsed = DateFormatUtil.parse(" 11.11.2025 22:00 \t");
+        assertEquals(expected, parsed);
+    }
+}

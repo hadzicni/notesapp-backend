@@ -111,6 +111,15 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <configuration>
+                    <excludedGroups>tdd-open-bug</excludedGroups>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
@@ -184,6 +193,11 @@
                     <mutators>
                         <mutator>STRONGER</mutator>
                     </mutators>
+                    <junit5PluginConfiguration>
+                        <excludedTags>
+                            <param>tdd-open-bug</param>
+                        </excludedTags>
+                    </junit5PluginConfiguration>
                 </configuration>
                 <dependencies>
                     <dependency>
