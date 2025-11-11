@@ -78,6 +78,13 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Enable Mockito static mocking (for time-freezing tests) -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -129,6 +136,28 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <!-- PIT Mutation Testing (manual: mvn -Ppitest pitest:mutationCoverage) -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.16.0</version>
+                <configuration>
+                    <targetClasses>
+                        <param>ch.hadzic.nikola.notesapp.data.service.*</param>
+                        <param>ch.hadzic.nikola.notesapp.util.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>ch.hadzic.nikola.notesapp.service.*</param>
+                        <param>ch.hadzic.nikola.notesapp.util.*</param>
+                    </targetTests>
+                    <threads>2</threads>
+                    <timestampedReports>false</timestampedReports>
+                    <mutators>
+                        <mutator>STRONGER</mutator>
+                    </mutators>
+                    <junit5PluginVersion>1.2.1</junit5PluginVersion>
                 </configuration>
             </plugin>
         </plugins>

@@ -101,9 +101,15 @@ public class NoteService {
                 Tag persistentTag = tagRepository.findById(tag.getId())
                         .orElseThrow(() -> new RuntimeException("Tag nicht gefunden: " + tag.getId()));
                 persistentTags.add(persistentTag);
-                persistentTag.getNotes().add(existing);
             }
+            // Wichtig: erst die Tags der Note ersetzen, dann bidirektional pflegen,
+            // damit sich HashCode/Equals-Änderungen nicht auf bereits in Sets eingefügte Objekte auswirken
             existing.setTags(persistentTags);
+            for (Tag persistentTag : persistentTags) {
+                if (persistentTag.getNotes() != null) {
+                    persistentTag.getNotes().add(existing);
+                }
+            }
         }
 
         return noteRepository.save(existing);
