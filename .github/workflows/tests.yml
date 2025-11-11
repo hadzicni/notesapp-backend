@@ -18,7 +18,12 @@ jobs:
           cache: maven
       - name: Run unit tests (services + utils only)
         run: mvn -B -ntp -Dtest="**/service/*Test,**/util/*Test" test
+      - name: Upload JaCoCo report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco
       # Optional: enable PIT in a separate workflow or on demand
       # - name: Run PIT Mutation Testing
       #   run: mvn -B -ntp org.pitest:pitest-maven:mutationCoverage
-
