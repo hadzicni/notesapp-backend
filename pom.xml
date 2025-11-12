@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version> 
+            <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -98,6 +98,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groupcdg.arcmutate</groupId>
+            <artifactId>arcmutate-spring</artifactId>
+            <version>0.0.10</version>
         </dependency>
         <dependency>
             <groupId>com.github.librepdf</groupId>
