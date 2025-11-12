@@ -9,8 +9,6 @@ import ch.hadzic.nikola.notesapp.data.repository.TodoRepository;
 import ch.hadzic.nikola.notesapp.data.service.NoteService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
