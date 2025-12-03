@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -73,7 +74,7 @@ public class NoteService {
         noteRepository.delete(note);
     }
 
-    @Transactional
+            @Transactional
     public Note updateNote(Note updatedNote) {
         Note existing = getNoteById(updatedNote.getId());
 
@@ -86,36 +87,37 @@ public class NoteService {
             existing.setNotebook(updatedNote.getNotebook());
         }
 
-        // Bidirektionale Pflege der Tags
         if (updatedNote.getTags() != null) {
-            // Entferne bestehende Verknüpfungen
             if (existing.getTags() != null) {
                 for (Tag oldTag : existing.getTags()) {
-                    oldTag.getNotes().remove(existing);
+                    if (oldTag.getNotes() != null) {
+                        oldTag.getNotes().remove(existing);
+                    }
                 }
             }
 
-            // Neue Tags setzen und bidirektional pflegen
             Set<Tag> persistentTags = new HashSet<>();
             for (Tag tag : updatedNote.getTags()) {
                 Tag persistentTag = tagRepository.findById(tag.getId())
                         .orElseThrow(() -> new RuntimeException("Tag nicht gefunden: " + tag.getId()));
                 persistentTags.add(persistentTag);
             }
-            // Wichtig: erst die Tags der Note ersetzen, dann bidirektional pflegen,
-            // damit sich HashCode/Equals-Änderungen nicht auf bereits in Sets eingefügte Objekte auswirken
+
             existing.setTags(persistentTags);
+            existing.setUpdatedAt(LocalDateTime.now());
+
             for (Tag persistentTag : persistentTags) {
                 if (persistentTag.getNotes() != null) {
                     persistentTag.getNotes().add(existing);
                 }
             }
+        } else {
+            existing.setUpdatedAt(LocalDateTime.now());
         }
 
         return noteRepository.save(existing);
     }
-
-    private void validateOwnership(Note note) {
+private void validateOwnership(Note note) {
         if (!note.getUserId().equals(getCurrentUserId())) {
             throw new SecurityException("Not authorized to access this note");
         }
@@ -125,3 +127,5 @@ public class NoteService {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
+
+

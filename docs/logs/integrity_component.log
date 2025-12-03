@@ -1,0 +1,16 @@
+# Component: Data Integrity (T-021..T-023)
+# Source: target/surefire-reports/TEST-ch.hadzic.nikola.notesapp.integration.DataIntegrityIntegrationTest.xml
+# Summary: Tests run=3, Failures=0, Errors=0, Skipped=0, Time=3.28s
+
+[T-021] t021_manyToManyRelationships_persistBothDirections (0.853s)
+- H2 schema created; tags and note inserted
+- note_tag join rows persisted; subsequent SELECT confirms bidirectional links present
+
+[T-022] t022_cascadeDelete_removesTodosWithNote (0.292s)
+- INSERT note with todos; SELECT confirms todos stored
+- deleteNote triggers cascade; final counts show no todos remaining (orphans removed)
+
+[T-023] t023_userIsolation_preventsCrossUserDataLeak (0.080s)
+- Notes for user1 and user2 inserted
+- Access as user1 returns only own note; cross-user get by id throws SecurityException
+- Tag queries per user return isolated results

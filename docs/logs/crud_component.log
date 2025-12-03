@@ -1,0 +1,18 @@
+# Component: CRUD / Transactions (T-011..T-013)
+# Source: target/surefire-reports/TEST-ch.hadzic.nikola.notesapp.integration.NoteCrudIntegrationTest.xml
+# Summary: Tests run=3, Failures=0, Errors=0, Skipped=0, Time=1.06s
+
+[T-011] t011_createNote_persistsWithTimestampsAndGeneratedId (0.021s)
+- H2 test database started, schema created (note, tag, todo, note_tag, notebook)
+- INSERT into note (... title, user_id ...) values (?, ?, ?, ?, ?, ?, ?, ?, default)
+- SELECT note by id confirms insert
+
+[T-012] t012_updateNote_updatesFieldsAndTimestamp (0.098s)
+- Spring context bootstrapped, H2 datasource initialized
+- UPDATE note SET content/title/favorite/archived/updated_at WHERE id=?
+- Follow-up SELECT note by id shows updated values and refreshed updated_at
+
+[T-013] t013_transactionalRollbackOnConstraintViolation_leavesDatabaseClean (0.053s)
+- INSERT note succeeds
+- INSERT tag fails with SQLState 23502: column USER_ID null (provoked constraint violation)
+- Subsequent SELECT count(*) shows note/tag counts = 0 (rollback successful)

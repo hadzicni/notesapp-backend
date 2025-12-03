@@ -1,0 +1,15 @@
+# Component: Database Connection (T-001..T-003)
+# Source: target/surefire-reports/TEST-ch.hadzic.nikola.notesapp.integration.DatabaseConnectionIntegrationTest.xml
+# Summary: Tests run=3, Failures=0, Errors=0, Skipped=0, Time=15.22s
+
+[T-001] t001_successfulConnection_allowsSimpleRepositoryCall (0.008s)
+- H2 datasource initialized (jdbc:h2:mem:...;DB_CLOSE_DELAY=-1)
+- noteRepository.findAll() executes without error (connection valid)
+
+[T-002] t002_failedConnection_surfacesClearException (2.128s)
+- Hikari config set to invalid Postgres host/credentials
+- Pool initialization throws PoolInitializationException as expected (failed startup surfaced)
+
+[T-003] t003_poolExhaustion_timesOutWhenLimitReached (0.024s)
+- Hikari pool started with maxPoolSize=2
+- Two connections acquired; third request triggers SQLTransientConnectionException (timeout) confirming exhaustion handling

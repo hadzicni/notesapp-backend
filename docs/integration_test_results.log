@@ -1,0 +1,29 @@
+NotesApp – Integration Test Log (Surefire)
+Run: mvn test
+Date/Time: 2025-12-03T14:19:06+01:00
+Env: Spring Boot 3.4.4, Java 21, Profile=test (H2), Maven Surefire 3.5.2
+
+Component 1 – Database Connection (DatabaseConnectionIntegrationTest)
+  T-001 t001_successfulConnection_allowsSimpleRepositoryCall ........ PASS
+  T-002 t002_failedConnection_surfacesClearException ................. PASS
+  T-003 t003_poolExhaustion_timesOutWhenLimitReached ................. PASS
+  Summary: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time: 15.22 s
+
+Component 2 – CRUD / Transactions (NoteCrudIntegrationTest)
+  T-011 t011_createNote_persistsWithTimestampsAndGeneratedId ......... PASS
+  T-012 t012_updateNote_updatesFieldsAndTimestamp .................... PASS
+  T-013 t013_transactionalRollbackOnConstraintViolation .............. PASS
+  Summary: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time: 1.06 s
+
+Component 3 – Data Integrity (DataIntegrityIntegrationTest)
+  T-021 t021_manyToManyRelationships_persistBothDirections ........... PASS
+  T-022 t022_cascadeDelete_removesTodosWithNote ...................... PASS
+  T-023 t023_userIsolation_preventsCrossUserDataLeak ................. PASS
+  Summary: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time: 1.25 s
+
+Full Surefire reports:
+  target/surefire-reports/TEST-ch.hadzic.nikola.notesapp.integration.DatabaseConnectionIntegrationTest.xml
+  target/surefire-reports/TEST-ch.hadzic.nikola.notesapp.integration.NoteCrudIntegrationTest.xml
+  target/surefire-reports/TEST-ch.hadzic.nikola.notesapp.integration.DataIntegrityIntegrationTest.xml
+
+All component suites PASS and align with documented test cases (T-001–T-023).
